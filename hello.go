@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"rumod/gl"
 	"time"
 )
 
@@ -90,6 +91,7 @@ func main() {
 	fmt.Println(" Задачи на неделю...")
 	fmt.Println(" Устроиться в. Яндекс .Алису.")
 
+	fmt.Printf(gl.Read())
 	//`date '+ %A, %B %d, %Y.'`
 	//	currentTime := time.Now()
 	//	fmt.Printf("%d %s %d ",

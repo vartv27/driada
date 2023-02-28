@@ -1,9 +1,10 @@
-package main
+package gl
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"google.golang.org/api/sheets/v4"
 	"log"
 	"net/http"
 	"os"
@@ -13,7 +14,11 @@ import (
 	"google.golang.org/api/option"
 )
 
-// Retrieve a token, saves the token, then returns the generated client.
+func Ept() int {
+	return 1
+}
+
+// https://developers.google.com/sheets/api/quickstart/go
 func getClient(config *oauth2.Config) *http.Client {
 	// The file token.json stores the user's access and refresh tokens, and is
 	// created automatically when the authorization flow completes for the first
@@ -68,7 +73,7 @@ func saveToken(path string, token *oauth2.Token) {
 	json.NewEncoder(f).Encode(token)
 }
 
-func main() {
+func Read() string {
 	ctx := context.Background()
 	b, err := os.ReadFile("credentials.json")
 	if err != nil {
@@ -89,20 +94,25 @@ func main() {
 
 	// Prints the names and majors of students in a sample spreadsheet:
 	// https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-	spreadsheetId := "16K8Yxnq1s6a4COX1srG3HDa6eAVyjtGcsOYjdl-zP0M"
+	spreadsheetId := "1PKORfLXcTv9CK1gBbPPO4RDY0_XJA6n83Mgz2nO0oy4"
 	//16K8Yxnq1s6a4COX1srG3HDa6eAVyjtGcsOYjdl-zP0M
-	readRange := "lis1!A2:A6"
+	readRange := "день!D4:D6"
 	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve data from sheet: %v", err)
 	}
 
+	var str string
+	str = ""
 	if len(resp.Values) == 0 {
-		fmt.Println("No data found.")
+		str = "No data found."
 	} else {
+
 		for _, row := range resp.Values {
 			// Print columns A and E, which correspond to indices 0 and 4.
-			fmt.Printf("%s, %s\n", row[0], row[0])
+			str = str + fmt.Sprintf("%v", row[0]) + "  ... " + "\r\n"
+
 		}
 	}
+	return str
 }
