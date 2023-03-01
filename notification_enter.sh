@@ -20,6 +20,7 @@
 #echo "already_open" > /Users/baseuser/Desktop/code/cron_driada.txt
 #fi
 bt="result"
+#go env -w GO111MODULE=auto
 cd /Users/romanstr/Downloads/go/driada/
 STT=`/usr/local/go/bin/go run hello.go`
 #say $STT

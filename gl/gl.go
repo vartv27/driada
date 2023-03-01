@@ -73,7 +73,7 @@ func saveToken(path string, token *oauth2.Token) {
 	json.NewEncoder(f).Encode(token)
 }
 
-func Read() string {
+func Read() [2]string {
 	ctx := context.Background()
 	b, err := os.ReadFile("credentials.json")
 	if err != nil {
@@ -96,7 +96,7 @@ func Read() string {
 	// https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
 	spreadsheetId := "1PKORfLXcTv9CK1gBbPPO4RDY0_XJA6n83Mgz2nO0oy4"
 	//16K8Yxnq1s6a4COX1srG3HDa6eAVyjtGcsOYjdl-zP0M
-	readRange := "день!D4:D6"
+	readRange := "день!E4:E8"
 	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve data from sheet: %v", err)
@@ -114,5 +114,27 @@ func Read() string {
 
 		}
 	}
-	return str
+
+	var dayMonth [2]string
+	dayMonth[0] = str
+
+	readRange = "10_дней!E4:E6"
+	resp, err = srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
+	if err != nil {
+		log.Fatalf("Unable to retrieve data from sheet: %v", err)
+	}
+
+	str = ""
+	if len(resp.Values) == 0 {
+		str = "No data found."
+	} else {
+
+		for _, row := range resp.Values {
+			// Print columns A and E, which correspond to indices 0 and 4.
+			str = str + fmt.Sprintf("%v", row[0]) + "  ... " + "\r\n"
+
+		}
+	}
+	dayMonth[1] = str
+	return dayMonth
 }

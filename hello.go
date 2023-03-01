@@ -87,11 +87,12 @@ func main() {
 	fmt.Println(t.Weekday().String() + " . ")
 	//	fmt.Println()
 	fmt.Println(" Задачи на сегодня.")
-	fmt.Println(" изучить го...")
+	var dayMonth [2]string
+	dayMonth = gl.Read()
+	fmt.Println(dayMonth[0])
 	fmt.Println(" Задачи на неделю...")
-	fmt.Println(" Устроиться в. Яндекс .Алису.")
-
-	fmt.Printf(gl.Read())
+	fmt.Println(dayMonth[1])
+	//	fmt.Println(gl.Read())
 	//`date '+ %A, %B %d, %Y.'`
 	//	currentTime := time.Now()
 	//	fmt.Printf("%d %s %d ",
