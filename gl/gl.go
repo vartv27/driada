@@ -110,7 +110,16 @@ func Read() [2]string {
 
 		for _, row := range resp.Values {
 			// Print columns A and E, which correspond to indices 0 and 4.
-			str = str + fmt.Sprintf("%v", row[0]) + "  ... " + "\r\n"
+
+			//fmt.Printf("%T\n", row[0])
+			//	fmt.Println(row)
+			if row == nil {
+				os.Exit(3)
+				str = str + fmt.Sprintf(" %v", row[0]) + "  ... " + "\r\n"
+			} else {
+
+				str = str + fmt.Sprintf(" %v", row) + "  ... " + "\r\n"
+			}
 
 		}
 	}
@@ -131,7 +140,9 @@ func Read() [2]string {
 
 		for _, row := range resp.Values {
 			// Print columns A and E, which correspond to indices 0 and 4.
-			str = str + fmt.Sprintf("%v", row[0]) + "  ... " + "\r\n"
+			if row[0] != nil {
+				str = str + fmt.Sprintf(" %v", row) + "  ... " + "\r\n"
+			}
 
 		}
 	}
